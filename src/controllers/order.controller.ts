@@ -1,21 +1,19 @@
 import { Request, Response } from 'express';
-import { UserService } from '../services';
+import { OrderService } from '../services';
 import { errorMap } from '../types/ErrorMap';
-import createToken from '../auth/createToken';
-import { IUser } from '../types/User';
 
-export default class UserController {
-  constructor(private userService = new UserService()) {}
+export default class OrderController {
+  constructor(private orderService = new OrderService()) {}
 
-  public getAllUsers = async (_req: Request, res: Response) => {
-    const { type, message } = await this.userService.findAll();
+  public getAllOrders = async (_req: Request, res: Response) => {
+    const { type, message } = await this.orderService.findAll();
     if (type !== 'OK') return res.status(errorMap[type]).json({ message });
     res.status(errorMap[type]).json(message);
   };
 
   public getById = async (req: Request, res: Response) => {
     const id = parseInt(req.params.id, 10);
-    const { type, message } = await this.userService.getById(id);
+    const { type, message } = await this.orderService.getById(id);
     if (type !== 'OK') {
       return res.status(errorMap[type]).json({ message });
     }
@@ -23,12 +21,11 @@ export default class UserController {
   };
 
   public create = async (req: Request, res: Response) => {
-    const user = req.body;
-    const { type, message } = await this.userService.create(user);
+    const order = req.body;
+    const { type, message } = await this.orderService.create(order);
     if (type !== 'CREATED') {
       return res.status(errorMap[type]).json({ message });
     }
-    const token = createToken(message as IUser);
-    res.status(errorMap[type]).json({ token });
+    res.status(errorMap[type]).json(message);
   };
 }

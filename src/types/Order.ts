@@ -3,4 +3,6 @@ interface IOrder {
   userId: number;
 }
 
-export default IOrder;
+interface IOrderService { type: string, message: IOrder[] }
+
+export { IOrder, IOrderService };
