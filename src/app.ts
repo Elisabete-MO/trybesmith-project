@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { ProductRouter } from './routers';
+import { ProductRouter, UserRouter } from './routers';
 import errorMessage from './middlewares/validateMiddleware';
 
 const app = express();
@@ -11,4 +11,6 @@ app.get('/', (_req: Request, res: Response) => {
 });
 
 app.use('/products', errorMessage, ProductRouter);
+app.use('/users', errorMessage, UserRouter);
+
 export default app;

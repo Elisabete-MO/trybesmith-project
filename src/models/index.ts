@@ -1,6 +1,7 @@
-/* eslint-disable import/prefer-default-export */
 import ProductModel from './product.model';
+import UserModel from './user.model';
 
 export {
   ProductModel,
+  UserModel,
 };
