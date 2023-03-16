@@ -19,4 +19,13 @@ export default class ProductController {
     }
     res.status(errorMap[type]).json(message);
   };
+
+  public create = async (req: Request, res: Response) => {
+    const product = req.body;
+    const { type, message } = await this.productService.create(product);
+    if (type !== 'CREATED') {
+      return res.status(errorMap[type]).json({ message });
+    }
+    res.status(errorMap[type]).json(message);
+  };
 }

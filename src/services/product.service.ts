@@ -31,7 +31,7 @@ export default class ProductService {
       throw new BadRequestError(isValidProduct);
     }
     const products = await this.productModel.create(product);
-    return { type: 'OK', message: products };
+    return { type: 'CREATED', message: products };
   }
 }
 

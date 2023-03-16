@@ -11,5 +11,4 @@ app.get('/', (_req: Request, res: Response) => {
 });
 
 app.use('/products', errorMessage, ProductRouter);
-
 export default app;

@@ -1,6 +1,7 @@
 import express from 'express';
 import { ProductController } from '../controllers';
 import validateId from '../middlewares/validateIdMiddleware';
+import validateNewProductFields from '../middlewares/validateNewProductFields';
 
 const router = express.Router();
 const productController = new ProductController();
@@ -16,15 +17,15 @@ router.get(
   productController.getById,
 );
 
+router.post(
+  '/',
+  validateNewProductFields,
+  productController.create,
+);
+
 // router.get(
 //   '/search',
 //   ProductController.getByNameProduct,
-// );
-
-// router.post(
-//   '/',
-//   validateNewProductFields,
-//   ProductController.createProduct,
 // );
 
 // router.put(
