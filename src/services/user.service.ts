@@ -4,6 +4,7 @@ import { UserModel } from '../models';
 import { IUser, IUserService } from '../types/User';
 import { validateUser } from './validations/validationsUserInputValues';
 import { IResponse } from '../types/Response';
+import { ILogin } from '../types/Login';
 
 export default class UserService {
   public userModel: UserModel;
@@ -23,6 +24,14 @@ export default class UserService {
       return { type: 'USER_NOT_FOUND', message: 'User not found' };
     }
     return { type: 'OK', message: userById };
+  }
+
+  public async getByUserName(user: ILogin): Promise<IResponse> {
+    const data = await this.userModel.getByUserName(user);
+    if (!data || data === undefined) {
+      return { type: 'USER_NOT_FOUND', message: 'User not found' };
+    }
+    return { type: 'OK', message: data };
   }
 
   public async create(user: IUser): Promise<IResponse> {

@@ -7,6 +7,7 @@ interface IErrorMap {
   INVALID_VALUE: number,
   DATA_REQUIRED: number,
   SALE_NOT_FOUND: number,
+  UNAUTHORIZED: number,
 }
 
 const errorMap: IErrorMap = {
@@ -17,6 +18,7 @@ const errorMap: IErrorMap = {
   INVALID_VALUE: 422,
   DATA_REQUIRED: 400,
   SALE_NOT_FOUND: 404,
+  UNAUTHORIZED: 401,
 };
 
 export { IErrorMap, errorMap };

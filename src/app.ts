@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { ProductRouter, UserRouter, OrderRouter } from './routers';
+import { ProductRouter, UserRouter, OrderRouter, LoginRouter } from './routers';
 import errorMessage from './middlewares/validateMiddleware';
 
 const app = express();
@@ -13,5 +13,6 @@ app.get('/', (_req: Request, res: Response) => {
 app.use('/products', errorMessage, ProductRouter);
 app.use('/users', errorMessage, UserRouter);
 app.use('/orders', errorMessage, OrderRouter);
+app.use('/login', errorMessage, LoginRouter);
 
 export default app;

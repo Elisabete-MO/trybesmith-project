@@ -36,11 +36,11 @@ export default class OrderService {
     if (!orderById || orderById === undefined) {
       return { type: 'ORDER_NOT_FOUND', message: 'Order not found' };
     }
-    // const productsByOrderId = await this.productModel.getByOrderId(id);
-    // const productIds = productsByOrderId.map((product) => product.id);
+    const productsByOrderId = await this.productModel.getByOrderId(id);
+    const productIds = productsByOrderId.map((product) => product.id);
     const responseOrder: IResponseOrder = {
       ...orderById,
-      // productsIds: productIds as number[],
+      productsIds: productIds as number[],
     };
     return { type: 'OK', message: responseOrder };
   }

@@ -1,7 +1,8 @@
 import { Pool, RowDataPacket, ResultSetHeader } from 'mysql2/promise';
+import { ILogin } from '../types/Login';
 import { IUser } from '../types/User';
 
-const dataModel = (data: IUser) => {
+const dataModel = (data: IUser | ILogin) => {
   const columns = Object.keys((data)).join(', ');
   const placeholders = Object.keys(data)
     .map((_key) => '?')
@@ -29,6 +30,16 @@ export default class UserModel {
     const [rows] = result;
     const [user] = rows as IUser[];
     return user;
+  }
+
+  public async getByUserName(user: ILogin): Promise<IUser> {
+    const result = await this.connection.execute(
+      'SELECT * FROM Trybesmith.users WHERE username = ? AND password = ?',
+      [...Object.values(user)],
+    );
+    const [row] = result;
+    const [data] = row as IUser[];
+    return data;
   }
 
   public async create(user: IUser): Promise<IUser> {

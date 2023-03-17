@@ -1,7 +1,7 @@
 import { IUser } from '../../types/User';
 import { IResponse } from '../../types/Response';
 
-const properties = ['name', 'amount'];
+const properties = ['username', 'vocation', 'level', 'password'];
 
 function validateProperties(user: IUser): [boolean, string | null] {
   for (let i = 0; i < properties.length; i += 1) {

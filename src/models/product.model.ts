@@ -50,14 +50,6 @@ export default class ProductModel {
   }
 }
 
-// const findByName = async (productName: string) => {
-//   const [product] = await connection.execute(
-//     'SELECT * FROM Trybesmith.products WHERE name LIKE (?)',
-//     [`%${productName}%`],
-//   );
-//   return camelize(product);
-// };
-
 // const insert = async (product) => {
 //   const { columns, placeholders } = dataModel(product);
 //   const [{ insertId }] = await connection.execute(

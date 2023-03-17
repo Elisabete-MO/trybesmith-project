@@ -1,7 +1,7 @@
 import { IOrder } from '../../types/Order';
 import { IResponse } from '../../types/Response';
 
-const properties = ['name', 'amount'];
+const properties = ['id', 'userId'];
 
 function validateProperties(order: IOrder): [boolean, string | null] {
   for (let i = 0; i < properties.length; i += 1) {
