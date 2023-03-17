@@ -3,7 +3,7 @@ import connection from '../models/connection';
 import { UserModel } from '../models';
 import { IUser, IUserService } from '../types/User';
 import { validateUser } from './validations/validationsUserInputValues';
-import IResponse from '../types/Response';
+import { IResponse } from '../types/Response';
 
 export default class UserService {
   public userModel: UserModel;

@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import IResponse from '../types/Response';
+import { IResponse } from '../types/Response';
 
 import { idSchema } from './schemas';
 

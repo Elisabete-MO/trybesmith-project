@@ -5,4 +5,8 @@ interface IOrder {
 
 interface IOrderService { type: string, message: IOrder[] }
 
-export { IOrder, IOrderService };
+interface IOrderProducts extends IOrder {
+  productsIds: string;
+}
+
+export { IOrder, IOrderService, IOrderProducts };

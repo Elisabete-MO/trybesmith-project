@@ -1,7 +1,7 @@
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { NextFunction, Request, Response } from 'express';
 import { UserService } from '../services';
-import IResponse from '../types/Response';
+import { IResponse } from '../types/Response';
 
 require('dotenv/config');
 

@@ -1,5 +1,5 @@
 import { Pool, RowDataPacket, ResultSetHeader } from 'mysql2/promise';
-import { IOrder } from '../types/Order';
+import { IOrder, IOrderProducts } from '../types/Order';
 
 const dataModel = (data: IOrder) => {
   const columns = Object.keys((data)).join(', ');
@@ -16,11 +16,16 @@ export default class OrderModel {
     this.connection = connection;
   }
 
-  public async findAll(): Promise<IOrder[]> {
-    const result = await this.connection.execute<(IOrder & RowDataPacket)[]>(
-      'SELECT * FROM Trybesmith.orders');
+  public async findAll(): Promise<IOrderProducts[]> {
+    const result = await this.connection.execute<(IOrderProducts & RowDataPacket)[]>(
+      `SELECT t1.id AS 'id', t1.user_id AS 'userId',
+      GROUP_CONCAT(t2.id ORDER BY t2.id) AS 'productsIds'
+      FROM Trybesmith.orders t1
+      INNER JOIN Trybesmith.products t2 ON t1.id = t2.order_id
+      GROUP BY t1.id, t1.user_id
+      `);
     const [rows] = result;
-    return rows as IOrder[];
+    return rows as IOrderProducts[];
   }
 
   public async getById(id: number): Promise<IOrder> {

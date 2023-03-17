@@ -4,7 +4,11 @@ import { IUser } from './User';
 
 interface IResponse {
   type: string | number ;
-  message: string | number | IProduct | IUser | IOrder;
+  message: string | number | IProduct | IUser | IOrder | IResponseOrder;
 }
 
-export default IResponse;
+interface IResponseOrder extends IOrder{
+  productsIds?: number[];
+}
+
+export { IResponse, IResponseOrder };

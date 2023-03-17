@@ -1,5 +1,5 @@
 import { IOrder } from '../../types/Order';
-import IResponse from '../../types/Response';
+import { IResponse } from '../../types/Response';
 
 const properties = ['name', 'amount'];
 

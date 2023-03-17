@@ -1,5 +1,5 @@
 import { IUser } from '../../types/User';
-import IResponse from '../../types/Response';
+import { IResponse } from '../../types/Response';
 
 const properties = ['name', 'amount'];
 

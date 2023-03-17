@@ -3,7 +3,7 @@ import connection from '../models/connection';
 import { ProductModel } from '../models';
 import { IProductService, IProduct } from '../types/Product';
 import { validateProduct } from './validations/validationsInputValues';
-import IResponse from '../types/Response';
+import { IResponse } from '../types/Response';
 
 export default class ProductService {
   public productModel: ProductModel;
