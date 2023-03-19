@@ -1,44 +1,47 @@
 import { IUser } from '../../types/User';
 import { IResponse } from '../../types/Response';
+import { usernameSchema, vocationSchema, levelSchema, passwordSchema } from './schemas';
 
-const properties = ['username', 'vocation', 'level', 'password'];
-
-function validateProperties(user: IUser): [boolean, string | null] {
-  for (let i = 0; i < properties.length; i += 1) {
-    if (!Object.prototype.hasOwnProperty.call(user, properties[i])) {
-      return [false, properties[i]];
-    }
+function validateName(user: IUser): IResponse {
+  const { error } = usernameSchema.validate(user.username);
+  if (error) { 
+    const cleanMessage = error.message.replace('"value"', '"username"');
+    return { type: 'INVALID_VALUE', message: cleanMessage };
   }
-  return [true, null];
+  return { type: 'OK', message: '' };
 }
 
-function validateValues(user: IUser): [boolean, string | null] {
-  const entries = Object.entries(user);
-  for (let i = 0; i < entries.length; i += 1) {
-    const [property, value] = entries[i];
-    if (!value) {
-      return [false, property];
-    }
+function validateVocation(user: IUser): IResponse {
+  const { error } = vocationSchema.validate(user.vocation);
+  if (error) { 
+    const cleanMessage = error.message.replace('"value"', '"vocation"');
+    return { type: 'INVALID_VALUE', message: cleanMessage };
   }
-  return [true, null];
+  return { type: 'OK', message: '' };
 }
 
-function validateUser(user: IUser): IResponse | void {
-  let [valid, property] = validateProperties(user);
-  if (!valid) {
-    return { type: 'INVALID_VALUE', message: `O campo ${property} é obrigatório.` };
+function validateLevel(user: IUser): IResponse {
+  const { error } = levelSchema.validate(user.level);
+  console.log(error);
+  if (error) { 
+    const cleanMessage = error.message.replace('"value"', '"level"');
+    return { type: 'INVALID_VALUE', message: cleanMessage };
   }
-  [valid, property] = validateValues(user);
-  if (!valid) {
-    return { type: 'INVALID_VALUE', message: `O campo ${property} não pode ser nulo ou vazio.` };
-  }
+  return { type: 'OK', message: '' };
 }
 
-// const { error } = nameSchema.validate(name);
-//   return { type: 'INVALID_VALUE', message: '"name" length must be at least 5 characters long' };
+function validatePassword(user: IUser): IResponse {
+  const { error } = passwordSchema.validate(user.password);
+  if (error) { 
+    const cleanMessage = error.message.replace('"value"', '"password"');
+    return { type: 'INVALID_VALUE', message: cleanMessage };
+  }
+  return { type: 'OK', message: '' };
+}
 
 export {
-  validateProperties,
-  validateUser,
-  validateValues,
+  validateLevel,
+  validateName,
+  validatePassword,
+  validateVocation,
 };

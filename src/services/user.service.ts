@@ -1,8 +1,8 @@
-import { BadRequestError } from 'restify-errors';
 import connection from '../models/connection';
 import { UserModel } from '../models';
 import { IUser, IUserService } from '../types/User';
-import { validateUser } from './validations/validationsUserInputValues';
+import { validateName, validateLevel,
+  validatePassword, validateVocation } from './validations/validationsUserInputValues';
 import { IResponse } from '../types/Response';
 import { ILogin } from '../types/Login';
 
@@ -35,9 +35,21 @@ export default class UserService {
   }
 
   public async create(user: IUser): Promise<IResponse> {
-    const isValidUser = validateUser(user);
-    if (typeof isValidUser === 'string') {
-      throw new BadRequestError(isValidUser);
+    const validName = validateName(user);
+    if (validName.type !== 'OK') {
+      return { type: validName.type, message: validName.message };
+    }
+    const validPassword = validatePassword(user);
+    if (validPassword.type !== 'OK') {
+      return { type: validPassword.type, message: validPassword.message };
+    }
+    const validLevel = validateLevel(user);
+    if (validLevel.type !== 'OK') {
+      return { type: validLevel.type, message: validLevel.message };
+    }
+    const validVocation = validateVocation(user);
+    if (validVocation.type !== 'OK') {
+      return { type: validVocation.type, message: validVocation.message };
     }
     const users = await this.userModel.create(user);
     return { type: 'CREATED', message: users };

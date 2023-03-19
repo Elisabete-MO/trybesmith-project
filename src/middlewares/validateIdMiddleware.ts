@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { IResponse } from '../types/Response';
 
-import { idSchema } from './schemas';
+import { idSchema } from '../services/validations/schemas';
 
 export default function
 validateId(req: Request, res: Response, next: NextFunction): IResponse | void {
