@@ -1,8 +1,7 @@
-import { BadRequestError } from 'restify-errors';
 import connection from '../models/connection';
 import { ProductModel } from '../models';
 import { IProductService, IProduct } from '../types/Product';
-import { validateProduct } from './validations/validationsInputValues';
+import { validateAmount, validateName } from './validations/validationsInputValues';
 import { IResponse } from '../types/Response';
 
 export default class ProductService {
@@ -26,9 +25,14 @@ export default class ProductService {
   }
 
   public async create(product: IProduct): Promise<IResponse> {
-    const isValidProduct = validateProduct(product);
-    if (typeof isValidProduct === 'string') {
-      throw new BadRequestError(isValidProduct);
+    // const { type, message } = validateProduct(product);
+    const validName = validateName(product);
+    if (validName.type !== 'OK') {
+      return { type: validName.type, message: validName.message };
+    }
+    const validAmount = validateAmount(product);
+    if (validAmount.type !== 'OK') {
+      return { type: validAmount.type, message: validAmount.message };
     }
     const products = await this.productModel.create(product);
     return { type: 'CREATED', message: products };
