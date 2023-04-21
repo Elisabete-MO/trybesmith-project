@@ -1,7 +1,6 @@
-import { BadRequestError } from 'restify-errors';
 import connection from '../models/connection';
 import { OrderModel, ProductModel } from '../models';
-import { IOrder, IOrderProducts, IOrderService } from '../types/Order';
+import { IOrderProducts, IOrderService } from '../types/Order';
 import { validateOrder } from './validations/validationsOrderInputValues';
 import { IResponse, IResponseOrder } from '../types/Response';
 
@@ -45,12 +44,13 @@ export default class OrderService {
     return { type: 'OK', message: responseOrder };
   }
 
-  public async create(order: IOrder): Promise<IResponse> {
-    const isValidOrder = validateOrder(order);
-    if (typeof isValidOrder === 'string') {
-      throw new BadRequestError(isValidOrder);
+  public async create(userId: number, productsIds: number[]): Promise<IResponse> {
+    const validName = validateOrder(productsIds);
+    console.log(validName);
+    if (validName.type !== 'OK') {
+      return { type: validName.type, message: validName.message };
     }
-    const orders = await this.orderModel.create(order);
+    const orders = await this.orderModel.create(userId, productsIds);
     return { type: 'CREATED', message: orders };
   }
 }

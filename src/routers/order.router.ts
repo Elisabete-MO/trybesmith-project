@@ -1,4 +1,5 @@
 import express from 'express';
+import validateJWT from '../auth/validateJWT';
 import { OrderController } from '../controllers';
 import validateId from '../middlewares/validateIdMiddleware';
 import validateNewOrderFields from '../middlewares/validateNewOrderFields';
@@ -19,6 +20,7 @@ router.get(
 
 router.post(
   '/',
+  validateJWT,
   validateNewOrderFields,
   orderController.create,
 );

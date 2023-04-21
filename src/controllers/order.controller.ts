@@ -21,8 +21,9 @@ export default class OrderController {
   };
 
   public create = async (req: Request, res: Response) => {
+    const userId = req.user;
     const order = req.body;
-    const { type, message } = await this.orderService.create(order);
+    const { type, message } = await this.orderService.create(userId, order);
     if (type !== 'CREATED') {
       return res.status(errorMap[type]).json({ message });
     }

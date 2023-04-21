@@ -1,7 +1,6 @@
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { NextFunction, Request, Response } from 'express';
 import { UserService } from '../services';
-import { IResponse } from '../types/Response';
 
 require('dotenv/config');
 
@@ -9,7 +8,7 @@ const secret = process.env.JWT_SECRET ?? 'default-secret';
 
 declare module 'express' {
   export interface Request {
-    user?: IResponse;
+    user: number;
   }
 }
 
@@ -27,9 +26,9 @@ validateJWT(req: Request, res: Response, next: NextFunction): Promise<Response |
     if (!user) {
       return res.status(401).json({ message: 'Erro ao procurar usuário do token' });
     }
-    req.user = user;
+    req.user = payloadData.userId;
     next();
   } catch (err) {
-    return res.status(401).json({ message: 'Expired or invalid token' });
+    return res.status(401).json({ message: 'Invalid token' });
   }
 }

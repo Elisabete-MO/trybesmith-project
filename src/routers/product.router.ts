@@ -23,20 +23,4 @@ router.post(
   productController.create,
 );
 
-// router.get(
-//   '/search',
-//   ProductController.getByNameProduct,
-// );
-
-// router.put(
-//   '/:id',
-//   validateNewProductFields,
-//   ProductController.updateProduct,
-// );
-
-// router.delete(
-//   '/:id',
-//   ProductController.deleteProduct,
-// );
-
 export default router;

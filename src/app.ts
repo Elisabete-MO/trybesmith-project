@@ -1,8 +1,8 @@
-import express, { Request, Response } from 'express';
+import express, { Application, Request, Response } from 'express';
 import { ProductRouter, UserRouter, OrderRouter, LoginRouter } from './routers';
 import errorMessage from './middlewares/validateMiddleware';
 
-const app = express();
+const app: Application = express();
 
 app.use(express.json());
 

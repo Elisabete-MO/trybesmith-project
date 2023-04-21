@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from 'express';
-import { IResponse } from '../types/Response';
 
 function isUsernameValid(username: string): boolean {
   return !!username;
@@ -18,23 +17,19 @@ function isPasswordValid(password: string): boolean {
 }
 
 export default function
-validateNewUser(req: Request, res: Response, next: NextFunction): IResponse | void {
+validateNewUser(req: Request, res: Response, next: NextFunction) {
   const { username, vocation, level, password } = req.body;
   if (!isUsernameValid(username)) {
-    res.status(400).json({ message: '"username" is required' });
-    return;
+    return res.status(400).json({ message: '"username" is required' });
   } 
   if (!isVocationValid(vocation)) {
-    res.status(400).json({ message: '"vocation" is required' });
-    return;
+    return res.status(400).json({ message: '"vocation" is required' });
   }
   if (!isLevelValid(level)) {
-    res.status(400).json({ message: '"level" is required' });
-    return;
+    return res.status(400).json({ message: '"level" is required' });
   }
   if (!isPasswordValid(password)) {
-    res.status(400).json({ message: '"password" is required' });
-    return;
+    return res.status(400).json({ message: '"password" is required' });
   } next();
 }
 

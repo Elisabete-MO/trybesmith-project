@@ -38,24 +38,3 @@ export default class ProductService {
     return { type: 'CREATED', message: products };
   }
 }
-
-// const updateProduct = async (id, name) => {
-//   const findId = await findById(id);
-//   if (findId.type) return findId;
-//   const respName = schema.validateNewProduct(name);
-//   if (respName.type) return respName;
-
-//   await productModel.update(id, name);
-//   const updatedProduct = await productModel.findById(id);
-
-//   return { type: null, message: updatedProduct };
-// };
-
-// const deleteProduct = async (id) => {
-//   const findId = await findById(id);
-//   if (findId.type) return findId;
-
-//   await productModel.deleteProduct(id);
-
-//   return { type: null, message: '' };
-// };

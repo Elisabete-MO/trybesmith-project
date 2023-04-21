@@ -1,14 +1,6 @@
 import { Pool, RowDataPacket, ResultSetHeader } from 'mysql2/promise';
 import { IOrder, IOrderProducts } from '../types/Order';
 
-const dataModel = (data: IOrder) => {
-  const columns = Object.keys((data)).join(', ');
-  const placeholders = Object.keys(data)
-    .map((_key) => '?')
-    .join(', ');
-  return ({ columns, placeholders });
-};
-
 export default class OrderModel {
   public connection: Pool;
 
@@ -36,14 +28,25 @@ export default class OrderModel {
     return order;
   }
 
-  public async create(order: IOrder): Promise<IOrder> {
-    const { columns, placeholders } = dataModel(order);
-    const result = await this.connection.execute<ResultSetHeader>(
-      `INSERT INTO Trybesmith.orders (${columns}) VALUE (${placeholders})`,
-      [...Object.values(order)],
+  public async create(userId: number, productsIds: number[]): 
+  Promise<{ userId: number, productIds: number[] }> {
+    const [result] = await this.connection.execute<ResultSetHeader>(
+      'INSERT INTO Trybesmith.orders (user_id) VALUES (?)',
+      [userId],
     );
-    const [dataInserted] = result;
-    const { insertId } = dataInserted;
-    return { id: insertId, userId: order.userId };
+    const orderId = result.insertId;
+  
+    const productIds: number[] = await Promise.all(productsIds.map(async (productId) => {
+      const [rows] = await this.connection.execute<RowDataPacket[]>(
+        'SELECT id, name, amount FROM Trybesmith.products WHERE id = ?',
+        [productId],
+      );
+      const [{ name, amount }] = rows;
+      const [productResult] = await this.connection.execute<ResultSetHeader>(
+        'INSERT INTO Trybesmith.products (name, amount, order_id) VALUES (?, ?, ?)',
+        [name, amount, orderId],
+      );
+      return productResult.insertId;
+    })); return { userId, productIds };
   }
 }

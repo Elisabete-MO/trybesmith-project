@@ -22,7 +22,6 @@ function validateVocation(user: IUser): IResponse {
 
 function validateLevel(user: IUser): IResponse {
   const { error } = levelSchema.validate(user.level);
-  console.log(error);
   if (error) { 
     const cleanMessage = error.message.replace('"value"', '"level"');
     return { type: 'INVALID_VALUE', message: cleanMessage };

@@ -47,31 +47,5 @@ export default class ProductModel {
     const [dataInserted] = result;
     const { insertId } = dataInserted;
     return { id: insertId, ...product };
-  }
+  }  
 }
-
-// const insert = async (product) => {
-//   const { columns, placeholders } = dataModel(product);
-//   const [{ insertId }] = await connection.execute(
-//     `INSERT INTO Trybesmith.products (${columns}) VALUE (${placeholders})`,
-//     [...Object.values(product)],
-//   );
-
-//   return insertId;
-// };
-
-// const update = async (id, name) => {
-//   await connection.execute(
-//     'UPDATE Trybesmith.products SET name = (?) WHERE id = (?)',
-//     [name, id],
-//     );
-//   return id;
-// };
-
-// const deleteProduct = async (id) => {
-//   await connection.execute(
-//     'DELETE FROM Trybesmith.products WHERE id = (?)',
-//     [id],
-//     );
-//   return id;
-// };
